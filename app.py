@@ -9,11 +9,10 @@ Original file is located at
 
 import streamlit as st
 import numpy as np
-import tensorflow as tf
 from PIL import Image
+from keras.models import load_model
 
-# Load model
-model = tf.keras.models.load_model("apple_disease_model.keras")
+model = load_model("apple_disease_model.keras")
 
 class_names = ["Apple Scab", "Black Rot", "Cedar Apple Rust", "Healthy"]
 
