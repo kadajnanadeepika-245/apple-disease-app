@@ -10,25 +10,27 @@ Original file is located at
 import streamlit as st
 import numpy as np
 from PIL import Image
-from keras.models import load_model
-
-model = load_model("apple_disease_model.keras")
-
-class_names = ["Apple Scab", "Black Rot", "Cedar Apple Rust", "Healthy"]
 
 st.title("🍎 Apple Disease Detection")
 
-uploaded_file = st.file_uploader("Upload Apple Leaf Image", type=["jpg","png"])
+st.write("Upload an apple leaf image to predict the disease.")
 
-if uploaded_file:
+uploaded_file = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+
+if uploaded_file is not None:
+    # Show image
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image")
+    st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    img = image.resize((224,224))
-    img = np.array(img)/255.0
-    img = img.reshape(1,224,224,3)
+    # Preprocess image (just for display purpose)
+    img = image.resize((224, 224))
+    img = np.array(img) / 255.0
 
-    prediction = model.predict(img)
-    predicted_class = class_names[np.argmax(prediction)]
+    st.success("✅ Image uploaded successfully!")
 
-    st.success(f"Prediction: {predicted_class}")
+    # Dummy prediction (since TensorFlow not supported)
+    st.warning("⚠️ Model prediction disabled due to TensorFlow compatibility issue on Streamlit Cloud.")
+
+    # Example output (optional)
+    class_names = ["Apple Scab", "Black Rot", "Cedar Apple Rust", "Healthy"]
+    st.info(f"Example Output: {class_names[0]}")
